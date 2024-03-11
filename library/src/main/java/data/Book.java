@@ -12,6 +12,15 @@ public class Book {
   private String subGenre;
   private String publisher;
   private boolean loaned = false;
+  private int couter = 0;
+
+  public int getCouter() {
+    return couter;
+  }
+
+  public void setCouter(int couter) {
+    this.couter = couter;
+  }
 
   public boolean isLoaned() {
     return loaned;

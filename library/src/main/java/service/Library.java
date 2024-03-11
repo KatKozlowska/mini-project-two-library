@@ -1,9 +1,13 @@
 package service;
 
 import data.Book;
+
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
 import utils.Commands;
 import utils.CsvReader;
 
@@ -30,7 +34,7 @@ public class Library {
 
   public void enterLibrary() {
     while (true) {
-      System.out.println("Welcome to the service.Library! Please choose one of the options");
+      System.out.println("Welcome to the Library! Please choose one of the options");
       System.out.println(Arrays.toString(commands.getOpeningCommands()));
       int userInput = scanner.nextInt();
       switch (userInput) {
@@ -60,6 +64,7 @@ public class Library {
         searchBooks();
       case 3:
         System.out.println(Arrays.toString(commands.getOpeningCommands()));
+//        returnBook();
         break;
       default:
         System.out.println("Invalid input. Please choose from given options.");
@@ -72,7 +77,7 @@ public class Library {
     int userInput = scanner.nextInt();
     switch (userInput) {
       case 1:
-        System.out.println("books on loan list");
+        getBorrowedBooks();
         break;
       case 2:
         searchBooks();
@@ -112,7 +117,22 @@ public class Library {
     String userInput = scanner.next();
     if (userInput.equalsIgnoreCase("y")) {
       book.setLoaned(true);
-      System.out.println("You have borrowed book");
+      book.setCouter(+1);
+      System.out.printf("You have borrowed %s", book);
     } else searchBooks();
   }
+
+  public void getBorrowedBooks() {
+    System.out.println("The following books have been checked out:");
+    bookList.stream().filter(Book::isLoaned).forEach(System.out::println);
+  }
 }
+
+
+//function which would allow you tp=o return borrowed books and adds it back to the list available to loan
+//  public void returnBook() {
+//    System.out.println("Enter the title of the book you would like to return");
+//    String userInput = scanner.next();
+//    bookList.stream().filter(book -> book.isLoaned() && bookList.contains(userInput.toLowerCase())).findFirst().ifPresent(book -> book.setLoaned(false));
+//
+//  }
